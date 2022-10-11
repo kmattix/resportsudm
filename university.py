@@ -1,4 +1,4 @@
-from difflib import get_close_matches
+#Object that represents and entry in the Esports Program Master List.
 
 class University:
     universities = {}
