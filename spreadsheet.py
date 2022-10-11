@@ -1,9 +1,3 @@
-#Backend for accessing all university esports data from
-#https://docs.google.com/spreadsheets/d/1jf1ARsXEpiTPVXfrheZZ045ZiiThfl8WCwyWcdglldY/edit#gid=0
-#using the Google Sheets API.
-#
-#Created by Kevin Mattix (kmattix@radford.edu)
-
 from __future__ import print_function
 
 from university import University
@@ -16,6 +10,9 @@ from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
+
+#Object that represents the Esports Program Master List
+#https://docs.google.com/spreadsheets/d/1jf1ARsXEpiTPVXfrheZZ045ZiiThfl8WCwyWcdglldY/edit#gid=0
 
 class Spreadsheet:
     #if modifying these scopes, delete the file token.json
