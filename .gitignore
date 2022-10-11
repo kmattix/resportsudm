@@ -1,0 +1,9 @@
+# user files
+credentials.json
+token.json
+
+# vscode settings
+/.vscode
+
+# pyc cachce folder
+/__pycache__
