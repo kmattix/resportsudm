@@ -1,5 +1,3 @@
-from __future__ import print_function
-
 from university import University
 
 import os.path

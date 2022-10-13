@@ -1,5 +1,3 @@
-from __future__ import print_function
-
 from spreadsheet import Spreadsheet
 
 #Backend for accessing all university esports data from
