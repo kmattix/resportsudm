@@ -1,6 +1,8 @@
+from inspect import _void
 from university import University
 
 import os.path
+from time import time
 from difflib import get_close_matches
 
 from google.auth.transport.requests import Request
@@ -20,12 +22,15 @@ class Spreadsheet:
     SHEET_ID = '1jf1ARsXEpiTPVXfrheZZ045ZiiThfl8WCwyWcdglldY'
     RANGE = '!A4:Q'
 
+    #how many seconds before the object can go before refreshing the data
+    TIMEOUT_SECONDS = 120
+
     def __init__(self):
         self.entries = {}
         self.refresh()
-    
-
-    def refresh(self):
+        self.lastrefresh = time()
+        
+    def refresh(self) -> None:
         creds = None
         #the file token.json stores the user's access and refresh tokens, and is
         #created automatically when the authorization flow completes for the first
@@ -59,21 +64,28 @@ class Spreadsheet:
         except HttpError as err:
             print(err)
 
-    def getuniversitybyname(self, name: str):
+    def getuniversitybyname(self, name: str) -> University:
         '''Takes exact university name string and returns the resulting University.'''
+        self.__checktimeoutrefresh()
         for key, value in self.entries.items():
             if(key == name.lower()):
                 return value
 
-    def searchuniversitybyname(self, name: str) -> list:
+    def searchuniversitybyname(self, name: str) -> list[University]:
         '''Takes a search string and returns the resulting University list.'''
+        self.__checktimeoutrefresh()
         results = []
         found = get_close_matches(name.lower(), self.entries.keys(), 3, 0.5)
         for s in found:
             results.append(self.entries[s])
         return results
 
+    def __checktimeoutrefresh(self) -> None:
+        if time() - self.lastrefresh >= Spreadsheet.TIMEOUT_SECONDS:
+            self.refresh()
+
     def __str__(self) -> str:
+        self.__checktimeoutrefresh()
         result = ''
         for u in self.entries.values():
             result += f'{u.name}\n'
