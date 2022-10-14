@@ -28,7 +28,6 @@ class Spreadsheet:
     def __init__(self):
         self.entries = {}
         self.refresh()
-        self.lastrefresh = time()
         
     def refresh(self) -> None:
         creds = None
@@ -61,6 +60,8 @@ class Spreadsheet:
             self.entries = {}
             for row in values:
                 self.entries.update({row[0].lower() : University(row)})
+
+            self.lastrefresh = time()
         except HttpError as err:
             print(err)
 
