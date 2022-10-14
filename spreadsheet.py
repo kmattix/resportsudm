@@ -20,9 +20,13 @@ class Spreadsheet:
     SHEET_ID = '1jf1ARsXEpiTPVXfrheZZ045ZiiThfl8WCwyWcdglldY'
     RANGE = '!A4:Q'
 
+    #how many seconds before the object can go before refreshing the data
+    TIMEOUT_SECONDS = 120
+
     def __init__(self):
         self.entries = {}
         self.refresh()
+        self.lastrefresh = time()
     
 
     def refresh(self):
@@ -61,19 +65,26 @@ class Spreadsheet:
 
     def getuniversitybyname(self, name: str):
         '''Takes exact university name string and returns the resulting University.'''
+        self.__checktimeoutrefresh()
         for key, value in self.entries.items():
             if(key == name.lower()):
                 return value
 
     def searchuniversitybyname(self, name: str) -> list:
         '''Takes a search string and returns the resulting University list.'''
+        self.__checktimeoutrefresh()
         results = []
         found = get_close_matches(name.lower(), self.entries.keys(), 3, 0.5)
         for s in found:
             results.append(self.entries[s])
         return results
 
+    def __checktimeoutrefresh(self) -> None:
+        if time() - self.lastrefresh >= Spreadsheet.TIMEOUT_SECONDS:
+            self.refresh()
+
     def __str__(self) -> str:
+        self.__checktimeoutrefresh()
         result = ''
         for u in self.entries.values():
             result += f'{u.name}\n'
