@@ -16,11 +16,12 @@ def main():
         
         if(args != 'all'):
             universities = spreadsheet.searchuniversitybyname(args)
+            print()
             if universities:
                 for u in universities:
-                    print(f'\n{u}\n')
+                    print(f'{u}\n')
             else:
-                print('\nNone found.\n')
+                print('None found.\n')
         else:
             print(spreadsheet)
 
