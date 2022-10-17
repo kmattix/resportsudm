@@ -90,4 +90,4 @@ class Spreadsheet:
         result = ''
         for u in self.entries.values():
             result += f'{u.name}\n'
-        return result + f'Total [{len(self.entries)}]'
+        return result + f'\nTotal [{len(self.entries)}]'

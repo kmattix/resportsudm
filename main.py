@@ -23,6 +23,7 @@ def search(args):
         print()
         for u in universities:
             print(f'{u}\n')
+        print(f'Total [{len(universities)}]\n')
     else:
         print('\nNone found.\n') 
 
