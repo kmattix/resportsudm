@@ -1,3 +1,5 @@
+import sys
+
 from spreadsheet import Spreadsheet
 
 #Backend for accessing all university esports data from
@@ -6,23 +8,39 @@ from spreadsheet import Spreadsheet
 #
 #Created by Kevin Mattix (kmattix@radford.edu)
 
-def main():
-    spreadsheet = Spreadsheet()
-    while(True):
-        args = input('Search: ').lower()
+def all():
+    print(f'\n{SPREADSHEET}\n')
 
-        if(args == 'quit'):
-            break
-        
-        if(args != 'all'):
-            universities = spreadsheet.searchuniversitybyname(args)
-            if universities:
-                for u in universities:
-                    print(f'\n{u}\n')
-            else:
-                print('\nNone found.\n')
+def quit():
+    sys.exit('\nApplication terminated.')
+
+def help():
+    print(f'\nCommands={", ".join(COMMANDS.keys())}\n')
+
+def search(args):
+    universities = SPREADSHEET.searchuniversitybyname(args)
+    if universities:
+        print()
+        for u in universities:
+            print(f'{u}\n')
+        print(f'Total [{len(universities)}]\n')
+    else:
+        print('\nNone found.\n') 
+
+SPREADSHEET = Spreadsheet()
+COMMANDS = {
+    'all': all,
+    'quit': quit,
+    'help': help,
+}  
+
+def main():
+    while True:
+        args = input('Search: ').lower().strip()
+        if args in COMMANDS:
+            COMMANDS[args]()
         else:
-            print(spreadsheet)
+            search(args)
 
 if __name__ == '__main__':
     main()
