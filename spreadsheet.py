@@ -1,4 +1,3 @@
-from inspect import _void
 from university import University
 
 import os.path
@@ -26,7 +25,7 @@ class Spreadsheet:
     TIMEOUT_SECONDS = 120
 
     def __init__(self):
-        self.entries = {}
+        self.entries: dict[str, University] = {}
         self.refresh()
         
     def refresh(self) -> None:
