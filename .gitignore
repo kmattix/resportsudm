@@ -5,5 +5,5 @@ token.json
 # vscode settings
 /.vscode
 
-# pyc cachce folder
-/src/__pycache__
+# pyc cache folders
+__pycache__
