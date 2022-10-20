@@ -6,4 +6,4 @@ token.json
 /.vscode
 
 # pyc cachce folder
-/__pycache__
+/src/__pycache__
